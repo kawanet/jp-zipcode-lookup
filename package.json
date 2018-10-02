@@ -1,0 +1,35 @@
+{
+  "name": "jp-zipcode-lookup",
+  "description": "Japan Postal Zip Code Lookup",
+  "version": "0.2.0",
+  "author": "@kawanet",
+  "bugs": {
+    "url": "https://github.com/kawanet/jp-zipcode-lookup/issues"
+  },
+  "devDependencies": {
+    "@types/mocha": "^5.2.5",
+    "@types/node": "^10.11.3",
+    "mocha": "^5.2.0",
+    "typescript": "^3.1.1"
+  },
+  "homepage": "https://github.com/kawanet/jp-zipcode-lookup#readme",
+  "keywords": [
+    "JIS-X-0402",
+    "geocoding"
+  ],
+  "license": "MIT",
+  "main": "./lib/jp-zipcode-lookup.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kawanet/jp-zipcode-lookup.git"
+  },
+  "scripts": {
+    "build": "node src/prepare.js dist/mesh.json dist/city.json",
+    "fixpack": "fixpack",
+    "test": "./node_modules/.bin/mocha test",
+    "tsc": "./node_modules/.bin/tsc",
+    "tsc-types": "./node_modules/.bin/tsc -p types/types.json",
+    "tsc-watch": "./node_modules/.bin/tsc --watch"
+  },
+  "typings": "typings/jp-zipcode-lookup.d.ts"
+}

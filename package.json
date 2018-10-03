@@ -15,8 +15,9 @@
   },
   "homepage": "https://github.com/kawanet/jp-zipcode-lookup#readme",
   "keywords": [
-    "JIS-X-0402",
-    "geocoding"
+    "japan",
+    "zip",
+    "zipcode"
   ],
   "license": "MIT",
   "main": "./lib/jp-zipcode-lookup.js",

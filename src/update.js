@@ -14,7 +14,7 @@ const japanpost_zipcode_1 = require("japanpost-zipcode");
 const WARN = (message) => console.warn(message);
 function CLI(outDir) {
     return __awaiter(this, void 0, void 0, function* () {
-        const kenAll = yield japanpost_zipcode_1.KenAll.readAll();
+        const kenAll = yield japanpost_zipcode_1.KenAll.readAll({ logger: console });
         const prefMaster = {};
         const cityMaster = {};
         const zip5Master = {};

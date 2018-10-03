@@ -1,7 +1,8 @@
 {
   "include": [
     "lib/*.ts",
-    "src/*.ts"
+    "src/*.ts",
+    "test/*.ts"
   ],
   "compilerOptions": {
     "lib": [

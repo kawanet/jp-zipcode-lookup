@@ -5,10 +5,10 @@ export declare class Pref {
     code: string;
     name: string;
     kana: string;
-    constructor(code: number);
+    private constructor();
     private static master;
     private static cache;
-    static byCode(code: number): Pref;
+    static byCode(code: string): Pref;
     static byZipcode(zipcode: string): Pref[];
 }
 /**
@@ -19,10 +19,10 @@ export declare class City {
     name: string;
     kana: string;
     pref: Pref;
-    constructor(code: number);
+    private constructor();
     private static master;
     private static cache;
-    static byCode(code: number): City;
+    static byCode(code: string): City;
     static byZipcode(zipcode: string): City[];
 }
 /**
@@ -33,7 +33,7 @@ export declare class Oaza {
     city: City;
     code: string;
     name: string;
-    constructor(cityCode: number, zipcode: string, name: string);
+    private constructor();
     private static master5;
     private static master7;
     static byZipcode(zipcode: string): Oaza[];

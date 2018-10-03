@@ -21,8 +21,9 @@ export class Pref {
     name: string;
     kana: string;
 
-    constructor(code: number) {
-        this.code = "" + code;
+    private constructor(code: string) {
+        code = c2(code);
+        this.code = code;
 
         const master = Pref.master || (Pref.master = prefLoader());
         const row = master[code];
@@ -35,7 +36,7 @@ export class Pref {
     private static master: PrefMaster;
     private static cache = {} as { [code: string]: Pref };
 
-    static byCode(code: number): Pref {
+    static byCode(code: string): Pref {
         return Pref.cache[code] || (Pref.cache[code] = new Pref(code));
     }
 
@@ -54,8 +55,9 @@ export class City {
     kana: string;
     pref: Pref;
 
-    constructor(code: number) {
-        this.code = "" + code;
+    private constructor(code: string) {
+        code = c5(code);
+        this.code = code;
 
         const master = City.master || (City.master = cityLoader());
 
@@ -65,13 +67,13 @@ export class City {
             this.kana = row[1];
         }
 
-        this.pref = Pref.byCode(Math.floor(code / 1000));
+        this.pref = Pref.byCode(code.substr(0, 2));
     }
 
     private static master: CityMaster;
     private static cache = {} as { [code: string]: City };
 
-    static byCode(code: number): City {
+    static byCode(code: string): City {
         return City.cache[code] || (City.cache[code] = new City(code));
     }
 
@@ -90,7 +92,7 @@ export class Oaza {
     code: string;
     name: string;
 
-    constructor(cityCode: number, zipcode: string, name: string) {
+    private constructor(cityCode: string, zipcode: string, name: string) {
         const city = this.city = City.byCode(cityCode);
         this.pref = city.pref;
         this.code = zipcode;
@@ -118,7 +120,7 @@ export class Oaza {
                 city = v;
             } else {
                 // 町域名
-                list.push(new Oaza(city, zip7, v));
+                list.push(new Oaza(c5(city), zip7, v));
             }
         };
 
@@ -136,4 +138,12 @@ export class Oaza {
 function uniqueFilter() {
     const index = {} as { [code: string]: boolean };
     return (item: { code: string }) => ((!index[item.code]) && (index[item.code] = true));
+}
+
+function c2(number: number | string): string {
+    return ("00" + (number as number | 0)).substr(-2);
+}
+
+function c5(number: number | string): string {
+    return ("000000" + (number as number | 0)).substr(-5);
 }

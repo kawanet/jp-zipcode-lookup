@@ -12,6 +12,10 @@ const cityLoader = () => require("../master/city.json").city as CityMaster;
 const zip5Loader = () => require("../master/zip5.json").zip5 as PostalMaster;
 const zip7Loader = () => require("../master/zip7.json").zip7 as PostalMaster;
 
+const c2 = fixedString(2);
+const c5 = fixedString(5);
+const c7 = fixedString(7);
+
 /**
  * 都道府県
  */
@@ -36,7 +40,7 @@ export class Pref {
     private static cache = {} as { [code: string]: Pref };
 
     static byCode(code: string | number): Pref {
-        return Pref.cache[code] || (Pref.cache[code] = new Pref(num2str(2, code)));
+        return Pref.cache[code] || (Pref.cache[code] = new Pref(c2(code)));
     }
 
     static byZipcode(zipcode: string | number): Pref[] {
@@ -72,7 +76,7 @@ export class City {
     private static cache = {} as { [code: string]: City };
 
     static byCode(code: string | number): City {
-        return City.cache[code] || (City.cache[code] = new City(num2str(5, code)));
+        return City.cache[code] || (City.cache[code] = new City(c5(code)));
     }
 
     static byZipcode(zipcode: string | number): City[] {
@@ -104,7 +108,7 @@ export class Oaza {
         const master5 = Oaza.master5 || (Oaza.master5 = zip5Loader());
         const master7 = Oaza.master7 || (Oaza.master7 = zip7Loader());
 
-        const zip7 = num2str(7, zipcode);
+        const zip7 = c7(zipcode);
         const zip5 = zip7.substr(0, 5);
         const row5 = master5[zip5];
         const row7 = master7[zip7];
@@ -115,7 +119,7 @@ export class Oaza {
         const parse = (v: string | number) => {
             if ("number" === typeof v) {
                 // 市区町村コード
-                city = num2str(5, v);
+                city = c5(v);
             } else {
                 // 町域名
                 list.push(new Oaza(city, zip7, v));
@@ -138,7 +142,7 @@ function uniqueFilter() {
     return (item: { code: string }) => ((!index[item.code]) && (index[item.code] = true));
 }
 
-function num2str(length: number, number: number | string): string {
-    if (number && (number as string).length === length) return number as string;
-    return ("0000000" + (number as number | 0)).substr(-length);
+function fixedString(length: number) {
+    return (number: number | string) => (number && (number as string).length === length) ?
+        (number as string) : ("0000000" + (number as number | 0)).substr(-length);
 }

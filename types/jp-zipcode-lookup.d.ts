@@ -5,7 +5,7 @@ export declare class Pref {
     code: string;
     name: string;
     kana: string;
-    static byCode(code: string | number): Pref;
+    static byCode(code: string | number): Pref | undefined;
     static byZipcode(zipcode: string | number): Pref[];
 }
 /**
@@ -16,7 +16,7 @@ export declare class City {
     name: string;
     kana: string;
     pref: Pref;
-    static byCode(code: string | number): City;
+    static byCode(code: string | number): City | undefined;
     static byZipcode(zipcode: string | number): City[];
 }
 /**

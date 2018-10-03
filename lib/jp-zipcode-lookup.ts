@@ -3,9 +3,9 @@
 type PostalRow = (number | string)[];
 type PostalMaster = { [zip: string]: PostalRow };
 
-type NameKanaRow = [string, string];
-type PrefMaster = { [code: string]: NameKanaRow };
-type CityMaster = { [code: string]: NameKanaRow };
+type NameKanaPair = [string, string];
+type PrefMaster = { [code: string]: NameKanaPair };
+type CityMaster = { [code: string]: NameKanaPair };
 
 const prefLoader = () => require("../master/pref.json").pref as PrefMaster;
 const cityLoader = () => require("../master/city.json").city as CityMaster;
@@ -25,22 +25,24 @@ export class Pref {
     name: string;
     kana: string;
 
-    private constructor(code: string) {
+    private constructor(code: string, name: string, kana: string) {
         this.code = code;
-
-        const master = Pref.master || (Pref.master = prefLoader());
-        const row = master[code];
-        if (row) {
-            this.name = row[0];
-            this.kana = row[1];
-        }
+        this.name = name;
+        this.kana = kana;
     }
 
     private static master: PrefMaster;
+
     private static cache = {} as { [code: string]: Pref };
 
-    static byCode(code: string | number): Pref {
-        return Pref.cache[code] || (Pref.cache[code] = new Pref(c2(code)));
+    static byCode(code: string | number): Pref | undefined {
+        const cache = Pref.cache;
+        if (code in cache) return cache[code];
+
+        code = c2(code);
+        const master = Pref.master || (Pref.master = prefLoader());
+        const pair = master[code];
+        return pair && (cache[code] = new Pref(code, pair[0], pair[1]));
     }
 
     static byZipcode(zipcode: string | number): Pref[] {
@@ -58,25 +60,25 @@ export class City {
     kana: string;
     pref: Pref;
 
-    private constructor(code: string) {
+    private constructor(code: string, name: string, kana: string) {
         this.code = code;
-
-        const master = City.master || (City.master = cityLoader());
-
-        const row = master[code];
-        if (row) {
-            this.name = row[0];
-            this.kana = row[1];
-        }
-
-        this.pref = Pref.byCode(code.substr(0, 2));
+        this.name = name;
+        this.kana = kana;
+        this.pref = Pref.byCode(code.substr(0, 2))!;
     }
 
     private static master: CityMaster;
+
     private static cache = {} as { [code: string]: City };
 
-    static byCode(code: string | number): City {
-        return City.cache[code] || (City.cache[code] = new City(c5(code)));
+    static byCode(code: string | number): City | undefined {
+        const cache = City.cache;
+        if (code in cache) return cache[code];
+
+        code = c5(code);
+        const master = City.master || (City.master = cityLoader());
+        const pair = master[code];
+        return pair && (cache[code] = new City(code, pair[0], pair[1]));
     }
 
     static byZipcode(zipcode: string | number): City[] {
@@ -95,7 +97,7 @@ export class Oaza {
     name: string;
 
     private constructor(cityCode: string, zipcode: string, name: string) {
-        const city = this.city = City.byCode(cityCode);
+        const city = this.city = City.byCode(cityCode)!;
         this.pref = city.pref;
         this.code = zipcode;
         this.name = name;

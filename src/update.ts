@@ -11,9 +11,9 @@ async function CLI(outDir: string) {
     type PostalRow = (number | string)[];
     type PostalMaster = { [zip: string]: PostalRow };
 
-    type NameKanaRow = [string, string];
-    type PrefMaster = { [code: string]: NameKanaRow };
-    type CityMaster = { [code: string]: NameKanaRow };
+    type NameKanaPair = [string, string];
+    type PrefMaster = { [code: string]: NameKanaPair };
+    type CityMaster = { [code: string]: NameKanaPair };
 
     const prefMaster = {} as PrefMaster;
     const cityMaster = {} as CityMaster;

@@ -46,7 +46,7 @@ export class Pref {
     }
 
     static byZipcode(zipcode: string | number): Pref[] {
-        return City.byZipcode(zipcode).map(city => city.pref).filter(uniqueFilter());
+        return Oaza.byZipcode(zipcode).map(oaza => oaza.pref).filter(uniqByCode());
     }
 }
 
@@ -82,7 +82,7 @@ export class City {
     }
 
     static byZipcode(zipcode: string | number): City[] {
-        return Oaza.byZipcode(zipcode).map(oaza => oaza.city).filter(uniqueFilter());
+        return Oaza.byZipcode(zipcode).map(oaza => oaza.city).filter(uniqByCode());
     }
 }
 
@@ -139,7 +139,7 @@ export class Oaza {
  * @private
  */
 
-function uniqueFilter() {
+function uniqByCode() {
     const index = {} as { [code: string]: boolean };
     return (item: { code: string }) => ((!index[item.code]) && (index[item.code] = true));
 }

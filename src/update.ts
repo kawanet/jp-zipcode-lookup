@@ -6,7 +6,7 @@ import {KenAll, KenAllColumns as C} from "japanpost-zipcode";
 const WARN = (message: string) => console.warn(message);
 
 async function CLI(outDir: string) {
-    const kenAll = await KenAll.readAll();
+    const kenAll = await KenAll.readAll({logger: console});
 
     type PostalRow = (number | string)[];
     type PostalMaster = { [zip: string]: PostalRow };

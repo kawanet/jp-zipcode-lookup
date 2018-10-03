@@ -24,12 +24,12 @@
     "url": "git+https://github.com/kawanet/jp-zipcode-lookup.git"
   },
   "scripts": {
-    "build": "node src/prepare.js dist/mesh.json dist/city.json",
     "fixpack": "fixpack",
     "test": "./node_modules/.bin/mocha test",
     "tsc": "./node_modules/.bin/tsc",
     "tsc-types": "./node_modules/.bin/tsc -p types/types.json",
-    "tsc-watch": "./node_modules/.bin/tsc --watch"
+    "tsc-watch": "./node_modules/.bin/tsc --watch",
+    "update": "node src/update.js master"
   },
   "typings": "typings/jp-zipcode-lookup.d.ts"
 }

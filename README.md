@@ -37,8 +37,13 @@ console.warn(pref.code, pref.name); // => 13 東京都
 ```typescript
 import {City, Oaza, Pref} from "jp-zipcode-lookup";
 
-const oaza = Oaza.byZipcode("1040061")[0];
+const pref = Pref.byCode("13")!;
+console.warn(pref.code, pref.name); // => 13 東京都
 
+const city = City.byCode("13103")!;
+console.warn(city.code, city.pref.name, city.name); // => 13103 東京都 港区
+
+const oaza = Oaza.byZipcode("1040061")[0]!;
 console.warn(oaza.code, oaza.name); // => 1040061 銀座
 ```
 

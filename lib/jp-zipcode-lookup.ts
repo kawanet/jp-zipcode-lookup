@@ -144,5 +144,5 @@ function uniqueFilter() {
 
 function fixedString(length: number) {
     return (number: number | string) => (number && (number as string).length === length) ?
-        (number as string) : ("0000000" + (number as number | 0)).substr(-length);
+        (number as string) : ("0000000" + (+number | 0)).substr(-length);
 }

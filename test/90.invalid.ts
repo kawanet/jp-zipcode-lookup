@@ -30,39 +30,39 @@ describe(FILENAME, () => {
         assert(!City.byCode(99999!));
     });
 
-    it('Pref.byCode()', () => {
+    it('Pref.byZipcode()', () => {
         assert.strictEqual(Pref.byZipcode(undefined!).length, 0);
     });
 
-    it('Pref.byCode("XXXXXXX")', () => {
+    it('Pref.byZipcode("XXXXXXX")', () => {
         assert.strictEqual(Pref.byZipcode("XXXXXXX"!).length, 0);
     });
 
-    it('Pref.byCode(9999999)', () => {
+    it('Pref.byZipcode(9999999)', () => {
         assert.strictEqual(Pref.byZipcode(9999999!).length, 0);
     });
 
-    it('City.byCode()', () => {
+    it('City.byZipcode()', () => {
         assert.strictEqual(City.byZipcode(undefined!).length, 0);
     });
 
-    it('City.byCode("XXXXXXX")', () => {
+    it('City.byZipcode("XXXXXXX")', () => {
         assert.strictEqual(City.byZipcode("XXXXXXX"!).length, 0);
     });
 
-    it('City.byCode(9999999)', () => {
+    it('City.byZipcode(9999999)', () => {
         assert.strictEqual(City.byZipcode(9999999!).length, 0);
     });
 
-    it('Oaza.byCode()', () => {
+    it('Oaza.byZipcode()', () => {
         assert.strictEqual(Oaza.byZipcode(undefined!).length, 0);
     });
 
-    it('Oaza.byCode("XXXXXXX")', () => {
+    it('Oaza.byZipcode("XXXXXXX")', () => {
         assert.strictEqual(Oaza.byZipcode("XXXXXXX"!).length, 0);
     });
 
-    it('Oaza.byCode(9999999)', () => {
+    it('Oaza.byZipcode(9999999)', () => {
         assert.strictEqual(Oaza.byZipcode(9999999!).length, 0);
     });
 });

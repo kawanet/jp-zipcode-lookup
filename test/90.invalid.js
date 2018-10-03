@@ -23,31 +23,31 @@ describe(FILENAME, () => {
     it('City.byCode(99999)', () => {
         assert(!jp_zipcode_lookup_1.City.byCode(99999));
     });
-    it('Pref.byCode()', () => {
+    it('Pref.byZipcode()', () => {
         assert.strictEqual(jp_zipcode_lookup_1.Pref.byZipcode(undefined).length, 0);
     });
-    it('Pref.byCode("XXXXXXX")', () => {
+    it('Pref.byZipcode("XXXXXXX")', () => {
         assert.strictEqual(jp_zipcode_lookup_1.Pref.byZipcode("XXXXXXX").length, 0);
     });
-    it('Pref.byCode(9999999)', () => {
+    it('Pref.byZipcode(9999999)', () => {
         assert.strictEqual(jp_zipcode_lookup_1.Pref.byZipcode(9999999).length, 0);
     });
-    it('City.byCode()', () => {
+    it('City.byZipcode()', () => {
         assert.strictEqual(jp_zipcode_lookup_1.City.byZipcode(undefined).length, 0);
     });
-    it('City.byCode("XXXXXXX")', () => {
+    it('City.byZipcode("XXXXXXX")', () => {
         assert.strictEqual(jp_zipcode_lookup_1.City.byZipcode("XXXXXXX").length, 0);
     });
-    it('City.byCode(9999999)', () => {
+    it('City.byZipcode(9999999)', () => {
         assert.strictEqual(jp_zipcode_lookup_1.City.byZipcode(9999999).length, 0);
     });
-    it('Oaza.byCode()', () => {
+    it('Oaza.byZipcode()', () => {
         assert.strictEqual(jp_zipcode_lookup_1.Oaza.byZipcode(undefined).length, 0);
     });
-    it('Oaza.byCode("XXXXXXX")', () => {
+    it('Oaza.byZipcode("XXXXXXX")', () => {
         assert.strictEqual(jp_zipcode_lookup_1.Oaza.byZipcode("XXXXXXX").length, 0);
     });
-    it('Oaza.byCode(9999999)', () => {
+    it('Oaza.byZipcode(9999999)', () => {
         assert.strictEqual(jp_zipcode_lookup_1.Oaza.byZipcode(9999999).length, 0);
     });
 });

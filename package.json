@@ -27,9 +27,9 @@
     "fixpack": "fixpack",
     "test": "./node_modules/.bin/mocha test",
     "tsc": "./node_modules/.bin/tsc",
-    "tsc-types": "./node_modules/.bin/tsc -p types/types.json",
+    "tsc-types": "./node_modules/.bin/tsc -p types/types.json && perl -i -pe 's/^ *private .*\\n//' types/jp-zipcode-lookup.d.ts",
     "tsc-watch": "./node_modules/.bin/tsc --watch",
     "update": "node src/update.js master"
   },
-  "typings": "typings/jp-zipcode-lookup.d.ts"
+  "typings": "types/jp-zipcode-lookup.d.ts"
 }

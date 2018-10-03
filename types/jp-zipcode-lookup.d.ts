@@ -5,9 +5,6 @@ export declare class Pref {
     code: string;
     name: string;
     kana: string;
-    private constructor();
-    private static master;
-    private static cache;
     static byCode(code: string | number): Pref;
     static byZipcode(zipcode: string | number): Pref[];
 }
@@ -19,9 +16,6 @@ export declare class City {
     name: string;
     kana: string;
     pref: Pref;
-    private constructor();
-    private static master;
-    private static cache;
     static byCode(code: string | number): City;
     static byZipcode(zipcode: string | number): City[];
 }
@@ -33,8 +27,5 @@ export declare class Oaza {
     city: City;
     code: string;
     name: string;
-    private constructor();
-    private static master5;
-    private static master7;
     static byZipcode(zipcode: string | number): Oaza[];
 }

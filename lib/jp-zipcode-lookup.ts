@@ -22,7 +22,6 @@ export class Pref {
     kana: string;
 
     private constructor(code: string) {
-        code = c2(code);
         this.code = code;
 
         const master = Pref.master || (Pref.master = prefLoader());
@@ -36,11 +35,11 @@ export class Pref {
     private static master: PrefMaster;
     private static cache = {} as { [code: string]: Pref };
 
-    static byCode(code: string): Pref {
-        return Pref.cache[code] || (Pref.cache[code] = new Pref(code));
+    static byCode(code: string | number): Pref {
+        return Pref.cache[code] || (Pref.cache[code] = new Pref(num2str(2, code)));
     }
 
-    static byZipcode(zipcode: string): Pref[] {
+    static byZipcode(zipcode: string | number): Pref[] {
         return City.byZipcode(zipcode).map(city => city.pref).filter(uniqueFilter());
     }
 }
@@ -56,7 +55,6 @@ export class City {
     pref: Pref;
 
     private constructor(code: string) {
-        code = c5(code);
         this.code = code;
 
         const master = City.master || (City.master = cityLoader());
@@ -73,11 +71,11 @@ export class City {
     private static master: CityMaster;
     private static cache = {} as { [code: string]: City };
 
-    static byCode(code: string): City {
-        return City.cache[code] || (City.cache[code] = new City(code));
+    static byCode(code: string | number): City {
+        return City.cache[code] || (City.cache[code] = new City(num2str(5, code)));
     }
 
-    static byZipcode(zipcode: string): City[] {
+    static byZipcode(zipcode: string | number): City[] {
         return Oaza.byZipcode(zipcode).map(oaza => oaza.city).filter(uniqueFilter());
     }
 }
@@ -102,25 +100,25 @@ export class Oaza {
     private static master5: PostalMaster;
     private static master7: PostalMaster;
 
-    static byZipcode(zipcode: string): Oaza[] {
+    static byZipcode(zipcode: string | number): Oaza[] {
         const master5 = Oaza.master5 || (Oaza.master5 = zip5Loader());
         const master7 = Oaza.master7 || (Oaza.master7 = zip7Loader());
 
-        const zip7 = zipcode;
+        const zip7 = num2str(7, zipcode);
         const zip5 = zip7.substr(0, 5);
         const row5 = master5[zip5];
         const row7 = master7[zip7];
 
         const list = [] as Oaza[];
-        let city: number;
+        let city: string;
 
         const parse = (v: string | number) => {
             if ("number" === typeof v) {
                 // 市区町村コード
-                city = v;
+                city = num2str(5, v);
             } else {
                 // 町域名
-                list.push(new Oaza(c5(city), zip7, v));
+                list.push(new Oaza(city, zip7, v));
             }
         };
 
@@ -140,10 +138,7 @@ function uniqueFilter() {
     return (item: { code: string }) => ((!index[item.code]) && (index[item.code] = true));
 }
 
-function c2(number: number | string): string {
-    return ("00" + (number as number | 0)).substr(-2);
-}
-
-function c5(number: number | string): string {
-    return ("000000" + (number as number | 0)).substr(-5);
+function num2str(length: number, number: number | string): string {
+    if (number && (number as string).length === length) return number as string;
+    return ("0000000" + (number as number | 0)).substr(-length);
 }

@@ -5,6 +5,7 @@ const assert = require("assert");
 const FILENAME = __filename.split("/").pop() as string;
 
 describe(FILENAME, () => {
+
     it('Oaza.byZipcode("0970000")', () => {
         const oaza = Oaza.byZipcode("0970000").pop() as Oaza;
         assert(oaza, "0970000 should exist");
@@ -30,12 +31,6 @@ describe(FILENAME, () => {
         assert.strictEqual(oaza.pref.name, "東京都");
         assert.strictEqual(oaza.city.name, "千代田区");
         // assert.strictEqual(oaza.name, "丸の内グラントウキョウサウスタワー");
-    });
-
-    // 1980000,東京都,青梅市,西多摩郡奥多摩町
-    it('Oaza.byZipcode("1980000")', () => {
-        const list = Oaza.byZipcode("1980000");
-        assert.strictEqual(list.length, 2);
     });
 
     it('Oaza.byZipcode("9071800")', () => {

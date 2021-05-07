@@ -1,14 +1,11 @@
 {
   "include": [
-    "lib/*.ts",
-    "src/*.ts",
-    "test/*.ts"
+    "lib",
+    "src",
+    "test"
   ],
   "compilerOptions": {
-    "lib": [
-      "es2015"
-    ],
-    "module": "commonjs",
+    "module": "CommonJS",
     "noImplicitAny": true,
     "noImplicitReturns": true,
     "noImplicitThis": true,
@@ -17,8 +14,9 @@
     "removeComments": false,
     "skipLibCheck": false,
     "strictNullChecks": true,
-    "target": "es2015",
+    "target": "ES2018",
     "types": [
+      "mocha",
       "node"
     ]
   }

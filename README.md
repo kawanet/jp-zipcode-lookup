@@ -1,11 +1,13 @@
 # Japan Postal Zip Code Lookup
 
-[![Build Status](https://travis-ci.org/kawanet/jp-zipcode-lookup.svg?branch=master)](https://travis-ci.org/kawanet/jp-zipcode-lookup) [![npm version](https://badge.fury.io/js/jp-zipcode-lookup.svg)](https://badge.fury.io/js/jp-zipcode-lookup)
+[![Node.js CI](https://github.com/kawanet/jp-zipcode-lookup/workflows/Node.js%20CI/badge.svg?branch=master)](https://github.com/kawanet/jp-zipcode-lookup/actions/)
+[![Build Status](https://travis-ci.org/kawanet/jp-zipcode-lookup.svg?branch=master)](https://travis-ci.org/kawanet/jp-zipcode-lookup)
 
 ### Synopsis
 
+Oaza
 ```js
-const Oaza = require("jp-zipcode-lookup").Oaza;
+const {Oaza} = require("jp-zipcode-lookup");
 
 const oaza = Oaza.byZipcode("1040061")[0];
 
@@ -14,16 +16,18 @@ console.warn(oaza.city.code, oaza.city.name); // => 13102 中央区
 console.warn(oaza.code, oaza.name); // => 1040061 銀座
 ```
 
+City
 ```js
-const City = require("jp-zipcode-lookup").City;
+const {City} = require("jp-zipcode-lookup");
 
 const city = City.byCode("13103");
 
 console.warn(city.code, city.pref.name, city.name); // => 13103 東京都 港区
 ```
 
+Pref
 ```js
-const Pref = require("jp-zipcode-lookup").Pref;
+const {Pref} = require("jp-zipcode-lookup");
 
 const pref = Pref.byCode("13");
 
@@ -49,17 +53,18 @@ console.warn(oaza.code, oaza.name); // => 1040061 銀座
 
 ### GitHub
 
-- [https://github.com/kawanet/jp-zipcode-lookup](https://github.com/kawanet/jp-zipcode-lookup)
+- https://github.com/kawanet/jp-zipcode-lookup
 
 ### See Also
 
-- [https://github.com/kawanet/jp-pref-lookup](https://github.com/kawanet/jp-pref-lookup)
-- [https://github.com/kawanet/jp-city-lookup](https://github.com/kawanet/jp-city-lookup)
-- [https://github.com/kawanet/japanpost-zipcode](https://github.com/kawanet/japanpost-zipcode)
+- https://github.com/kawanet/jp-pref-lookup
+- https://github.com/kawanet/jp-city-lookup
+- https://github.com/kawanet/japanpost-zipcode
+- https://www.post.japanpost.jp/zipcode/dl/kogaki-zip.html
 
 ### The MIT License (MIT)
 
-Copyright (c) 2018 Yusuke Kawasaki
+Copyright (c) 2018-2021 Yusuke Kawasaki
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

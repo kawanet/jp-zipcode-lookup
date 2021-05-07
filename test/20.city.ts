@@ -1,7 +1,8 @@
-import "mocha";
-import {City} from "../lib/jp-zipcode-lookup";
+#!/usr/bin/env mocha -R spec
 
-const assert = require("assert");
+import {strict as assert} from "assert";
+import {City} from "../";
+
 const FILENAME = __filename.split("/").pop() as string;
 
 describe(FILENAME, () => {

@@ -1,6 +1,7 @@
 # Japan Postal Zip Code Lookup
 
-[![Build Status](https://travis-ci.org/kawanet/jp-zipcode-lookup.svg?branch=master)](https://travis-ci.org/kawanet/jp-zipcode-lookup) [![npm version](https://badge.fury.io/js/jp-zipcode-lookup.svg)](https://badge.fury.io/js/jp-zipcode-lookup)
+[![Node.js CI](https://github.com/kawanet/jp-zipcode-lookup/workflows/Node.js%20CI/badge.svg?branch=master)](https://github.com/kawanet/jp-zipcode-lookup/actions/)
+[![Build Status](https://travis-ci.org/kawanet/jp-zipcode-lookup.svg?branch=master)](https://travis-ci.org/kawanet/jp-zipcode-lookup)
 
 ### Synopsis
 

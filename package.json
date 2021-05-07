@@ -13,6 +13,14 @@
     "mocha": "^5.2.0",
     "typescript": "^3.1.1"
   },
+  "files": [
+    "lib/*.js",
+    "master/*.json",
+    "src/*.js",
+    "types/jp-zipcode-lookup.d.ts",
+    "LICENSE",
+    "README.md"
+  ],
   "homepage": "https://github.com/kawanet/jp-zipcode-lookup#readme",
   "keywords": [
     "japan",
@@ -26,9 +34,9 @@
     "url": "git+https://github.com/kawanet/jp-zipcode-lookup.git"
   },
   "scripts": {
+    "build": "./node_modules/.bin/tsc && npm run update",
     "fixpack": "fixpack",
     "test": "./node_modules/.bin/mocha test",
-    "tsc": "./node_modules/.bin/tsc",
     "tsc-types": "./node_modules/.bin/tsc -p types/types.json && perl -i -pe 's/^ *private .*\\n//' types/jp-zipcode-lookup.d.ts",
     "tsc-watch": "./node_modules/.bin/tsc --watch",
     "update": "node src/update.js master"

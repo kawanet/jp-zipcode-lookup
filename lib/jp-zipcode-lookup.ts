@@ -1,4 +1,10 @@
-// jp-zipcode-lookup
+/**
+ * Japan Postal Zip Code Lookup
+ *
+ * @see https://github.com/kawanet/jp-zipcode-lookup
+ */
+
+import type * as types from "../";
 
 type PostalRow = (number | string)[];
 type PostalMaster = { [zip: string]: PostalRow };
@@ -20,7 +26,7 @@ const c7 = fixedString(7);
  * 都道府県
  */
 
-export class Pref {
+export class Pref implements types.Pref {
     code: string;
     name: string;
     kana: string;
@@ -54,7 +60,7 @@ export class Pref {
  * 市区町村
  */
 
-export class City {
+export class City implements types.City {
     code: string;
     name: string;
     kana: string;
@@ -90,7 +96,7 @@ export class City {
  * 大字
  */
 
-export class Oaza {
+export class Oaza implements types.Oaza {
     pref: Pref;
     city: City;
     code: string;

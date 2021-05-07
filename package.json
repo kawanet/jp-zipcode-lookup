@@ -38,7 +38,6 @@
     "fixpack": "fixpack",
     "prepack": "npm run build && npm run test",
     "test": "./node_modules/.bin/mocha test",
-    "tsc-types": "./node_modules/.bin/tsc -p types/types.json && perl -i -pe 's/^ *private .*\\n//' types/jp-zipcode-lookup.d.ts",
     "tsc-watch": "./node_modules/.bin/tsc --watch",
     "update": "node src/update.js master"
   },

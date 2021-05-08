@@ -7,7 +7,7 @@
 import type * as types from "../";
 
 type PostalRow = (number | string)[];
-type PostalMaster = { [zip: string]: PostalRow };
+type PostalMaster = { [zip: string]: (PostalRow | number | string) };
 
 type NameKanaPair = [string, string];
 type PrefMaster = { [code: string]: NameKanaPair };
@@ -134,8 +134,16 @@ export class Oaza implements types.Oaza {
             }
         };
 
-        if (row5) row5.forEach(parse);
-        if (row7) row7.forEach(parse);
+        const parseRow = (row: string | number | PostalRow) => {
+            if ("object" === typeof row) {
+                row.forEach(parse);
+            } else if (row != null) {
+                parse(row);
+            }
+        };
+
+        parseRow(row5);
+        parseRow(row7);
 
         return list;
     }

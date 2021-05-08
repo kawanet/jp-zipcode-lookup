@@ -10,6 +10,7 @@ async function CLI(outDir: string) {
 
     type PostalRow = (number | string)[];
     type PostalMaster = { [zip: string]: PostalRow };
+    type CompactMaster = { [zip: string]: (number | string | PostalRow) };
 
     type NameKanaPair = [string, string];
     type PrefMaster = { [code: string]: NameKanaPair };
@@ -98,13 +99,13 @@ async function CLI(outDir: string) {
 
     // zip5.json
     {
-        let json = JSON.stringify({zip5: zip5Master});
+        let json = JSON.stringify({zip5: compact(zip5Master)});
         json = json.replace(/("\d{5,7}":)/g, "\n$1");
         write("zip5.json", json);
     }
     // zip7.json
     {
-        let json = JSON.stringify({zip7: zip7Master});
+        let json = JSON.stringify({zip7: compact(zip7Master)});
         json = json.replace(/("\d{5,7}":)/g, "\n$1");
         write("zip7.json", json);
     }
@@ -117,6 +118,15 @@ async function CLI(outDir: string) {
         } else {
             process.stdout.write(json);
         }
+    }
+
+    function compact(master: PostalMaster): CompactMaster {
+        const flex = {} as CompactMaster;
+        Object.keys(master).forEach(key => {
+            const row = master[key];
+            flex[key] = (row.length === 1) ? row[0] : row;
+        });
+        return flex;
     }
 }
 

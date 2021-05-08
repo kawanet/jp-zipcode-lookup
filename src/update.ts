@@ -122,7 +122,7 @@ async function CLI(outDir: string) {
 
     function compact(master: PostalMaster): CompactMaster {
         const flex = {} as CompactMaster;
-        Object.keys(master).forEach(key => {
+        Object.keys(master).sort().forEach(key => {
             const row = master[key];
             flex[key] = (row.length === 1) ? row[0] : row;
         });

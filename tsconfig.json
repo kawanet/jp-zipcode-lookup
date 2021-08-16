@@ -12,7 +12,7 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "removeComments": false,
-    "skipLibCheck": false,
+    "skipLibCheck": true,
     "strictNullChecks": true,
     "target": "ES2018",
     "types": [

@@ -1,12 +1,17 @@
 // update
 
+import {cdate} from "cdate";
 import * as fs from "fs";
 import {KenAll, KenAllColumns as C} from "japanpost-zipcode";
 
 const WARN = (message: string) => console.warn(message);
 
 async function CLI(outDir: string) {
-    const kenAll = await KenAll.readAll({logger: console});
+    const kenAll = await new KenAll({logger: console});
+    await kenAll.clean();
+    const modified = await kenAll.modifiedAt();
+    console.warn("modified: " + cdate(modified).utcOffset(9).text("%Y/%m/%d %H:%M"));
+    const allRows = await kenAll.readAll();
 
     type PostalRow = (number | string)[];
     type PostalMaster = { [zip: string]: PostalRow };
@@ -24,7 +29,7 @@ async function CLI(outDir: string) {
     const lastCity = {} as { [zipcode: string]: string };
     const zip5To7 = {} as { [zip5: string]: PostalMaster };
 
-    for (const row of kenAll) {
+    for (const row of allRows) {
         const city = row[C.全国地方公共団体コード];
         const zip7 = row[C.郵便番号];
         const name = row[C.町域名];

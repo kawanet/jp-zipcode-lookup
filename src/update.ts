@@ -28,11 +28,17 @@ async function CLI(outDir: string) {
 
     const lastCity = {} as { [zipcode: string]: string };
     const zip5To7 = {} as { [zip5: string]: PostalMaster };
+    const dup = {} as { [key: string]: boolean };
 
     for (const row of allRows) {
         const city = row[C.全国地方公共団体コード];
         const zip7 = row[C.郵便番号];
         const name = row[C.町域名];
+
+        // 重複町域名を除外する
+        const dupKey = city + zip7 + name;
+        if (dup[dupKey]) continue;
+        dup[dupKey] = true;
 
         const postal = zip7Master[zip7] || (zip7Master[zip7] = [] as PostalRow);
 

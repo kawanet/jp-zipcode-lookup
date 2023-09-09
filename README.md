@@ -23,6 +23,10 @@ const {City} = require("jp-zipcode-lookup");
 const city = City.byCode("13103");
 
 console.warn(city.code, city.pref.name, city.name); // => 13103 東京都 港区
+
+const cities = City.byPref("13");
+
+console.warn(cities.map(city => city.name).join(", ")); // => 千代田区, 中央区, 港区, ...
 ```
 
 Pref

@@ -38,4 +38,16 @@ describe(FILENAME, () => {
         assert.strictEqual(city.name, "仙台市青葉区");
         assert.strictEqual(city.kana, "ｾﾝﾀﾞｲｼｱｵﾊﾞｸ");
     });
+
+    it('City.byPref(2)', () => {
+        const cities = City.byPref(2)!;
+        assert.notEqual(cities.length, 0);
+        assert.ok(cities.every(city => city.pref.code === "02"));
+    });
+
+    it('City.byPref("03")', () => {
+        const cities = City.byPref("03")!;
+        assert.notEqual(cities.length, 0);
+        assert.ok(cities.every(city => city.pref.code === "03"));
+    });
 });

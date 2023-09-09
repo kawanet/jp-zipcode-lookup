@@ -83,6 +83,13 @@ export class City implements types.City {
         return pair && new City(code, pair[0], pair[1]);
     });
 
+    static byPref = cache((code) => {
+        code = +code;
+        const master = loadCity();
+        const list = Object.keys(master).filter(city => (+city.slice(0, 2) === code)).map(City.byCode) as City[];
+        return list.length ? list : undefined;
+    });
+
     static byZipcode(zipcode: string | number): City[] {
         return Oaza.byZipcode(zipcode).map(oaza => oaza.city).filter(uniqByCode());
     }

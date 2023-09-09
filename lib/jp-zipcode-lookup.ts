@@ -73,7 +73,7 @@ export class City implements types.City {
         this.code = code;
         this.name = name;
         this.kana = kana;
-        this.pref = Pref.byCode(code.substr(0, 2))!;
+        this.pref = Pref.byCode(code.slice(0, 2))!;
     }
 
     static byCode = cache((code) => {
@@ -110,7 +110,7 @@ export class Oaza implements types.Oaza {
         const master7 = loadZip7();
 
         const zip7 = c7(zipcode);
-        const zip5 = zip7.substr(0, 5);
+        const zip5 = zip7.slice(0, 5);
         const row5 = master5[zip5];
         const row7 = master7[zip7];
 
@@ -153,5 +153,5 @@ function uniqByCode() {
 
 function fixedString(length: number) {
     return (number: number | string) => (number && (number as string).length === length) ?
-        (number as string) : ("0000000" + (+number | 0)).substr(-length);
+        (number as string) : ("0000000" + (+number | 0)).slice(-length);
 }

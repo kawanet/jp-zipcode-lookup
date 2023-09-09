@@ -1,7 +1,7 @@
 {
   "name": "jp-zipcode-lookup",
   "description": "Japan Postal Zip Code Lookup",
-  "version": "0.2.7",
+  "version": "0.2.8",
   "author": "@kawanet",
   "bugs": {
     "url": "https://github.com/kawanet/jp-zipcode-lookup/issues"

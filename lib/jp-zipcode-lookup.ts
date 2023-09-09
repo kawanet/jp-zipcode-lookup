@@ -13,10 +13,15 @@ type NameKanaPair = [string, string];
 type PrefMaster = { [code: string]: NameKanaPair };
 type CityMaster = { [code: string]: NameKanaPair };
 
-const prefLoader = () => require("../master/pref.json").pref as PrefMaster;
-const cityLoader = () => require("../master/city.json").city as CityMaster;
-const zip5Loader = () => require("../master/zip5.json").zip5 as PostalMaster;
-const zip7Loader = () => require("../master/zip7.json").zip7 as PostalMaster;
+const lazy = <T>(fn: () => T): (() => T) => {
+    let v: T;
+    return () => (v || (v = fn()));
+};
+
+const loadPref = lazy(() => require("../master/pref.json").pref as PrefMaster);
+const loadCity = lazy(() => require("../master/city.json").city as CityMaster);
+const loadZip5 = lazy(() => require("../master/zip5.json").zip5 as PostalMaster);
+const loadZip7 = lazy(() => require("../master/zip7.json").zip7 as PostalMaster);
 
 const c2 = fixedString(2);
 const c5 = fixedString(5);
@@ -37,8 +42,6 @@ export class Pref implements types.Pref {
         this.kana = kana;
     }
 
-    private static master: PrefMaster;
-
     private static cache = {} as { [code: string]: Pref };
 
     static byCode(code: string | number): Pref | undefined {
@@ -46,7 +49,7 @@ export class Pref implements types.Pref {
         if (code in cache) return cache[code];
 
         code = c2(code);
-        const master = Pref.master || (Pref.master = prefLoader());
+        const master = loadPref();
         const pair = master[code];
         return pair && (cache[code] = new Pref(code, pair[0], pair[1]));
     }
@@ -73,8 +76,6 @@ export class City implements types.City {
         this.pref = Pref.byCode(code.substr(0, 2))!;
     }
 
-    private static master: CityMaster;
-
     private static cache = {} as { [code: string]: City };
 
     static byCode(code: string | number): City | undefined {
@@ -82,7 +83,7 @@ export class City implements types.City {
         if (code in cache) return cache[code];
 
         code = c5(code);
-        const master = City.master || (City.master = cityLoader());
+        const master = loadCity();
         const pair = master[code];
         return pair && (cache[code] = new City(code, pair[0], pair[1]));
     }
@@ -109,12 +110,9 @@ export class Oaza implements types.Oaza {
         this.name = name;
     }
 
-    private static master5: PostalMaster;
-    private static master7: PostalMaster;
-
     static byZipcode(zipcode: string | number): Oaza[] {
-        const master5 = Oaza.master5 || (Oaza.master5 = zip5Loader());
-        const master7 = Oaza.master7 || (Oaza.master7 = zip7Loader());
+        const master5 = loadZip5();
+        const master7 = loadZip7();
 
         const zip7 = c7(zipcode);
         const zip5 = zip7.substr(0, 5);

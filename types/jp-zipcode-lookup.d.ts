@@ -28,6 +28,8 @@ export declare class City {
 
     static byCode(code: string | number): City | undefined;
 
+    static byPref(code: string | number): City[] | undefined;
+
     static byZipcode(zipcode: string | number): City[];
 }
 

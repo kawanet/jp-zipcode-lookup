@@ -13,10 +13,20 @@ type NameKanaPair = [string, string];
 type PrefMaster = { [code: string]: NameKanaPair };
 type CityMaster = { [code: string]: NameKanaPair };
 
-const prefLoader = () => require("../master/pref.json").pref as PrefMaster;
-const cityLoader = () => require("../master/city.json").city as CityMaster;
-const zip5Loader = () => require("../master/zip5.json").zip5 as PostalMaster;
-const zip7Loader = () => require("../master/zip7.json").zip7 as PostalMaster;
+const lazy = <T>(fn: () => T): (() => T) => {
+    let v: T;
+    return () => (v || (v = fn()));
+};
+
+const cache = <T>(fn: (code: string | number) => T | undefined): ((code: string | number) => T | undefined) => {
+    const cached = {} as { [code: string]: T | undefined };
+    return (code) => ((code in cached) ? cached[code] : (cached[code] = fn(code)));
+};
+
+const loadPref = lazy(() => require("../master/pref.json").pref as PrefMaster);
+const loadCity = lazy(() => require("../master/city.json").city as CityMaster);
+const loadZip5 = lazy(() => require("../master/zip5.json").zip5 as PostalMaster);
+const loadZip7 = lazy(() => require("../master/zip7.json").zip7 as PostalMaster);
 
 const c2 = fixedString(2);
 const c5 = fixedString(5);
@@ -37,19 +47,12 @@ export class Pref implements types.Pref {
         this.kana = kana;
     }
 
-    private static master: PrefMaster;
-
-    private static cache = {} as { [code: string]: Pref };
-
-    static byCode(code: string | number): Pref | undefined {
-        const cache = Pref.cache;
-        if (code in cache) return cache[code];
-
+    static byCode = cache((code) => {
         code = c2(code);
-        const master = Pref.master || (Pref.master = prefLoader());
+        const master = loadPref();
         const pair = master[code];
-        return pair && (cache[code] = new Pref(code, pair[0], pair[1]));
-    }
+        return pair && new Pref(code, pair[0], pair[1]);
+    });
 
     static byZipcode(zipcode: string | number): Pref[] {
         return Oaza.byZipcode(zipcode).map(oaza => oaza.pref).filter(uniqByCode());
@@ -70,22 +73,22 @@ export class City implements types.City {
         this.code = code;
         this.name = name;
         this.kana = kana;
-        this.pref = Pref.byCode(code.substr(0, 2))!;
+        this.pref = Pref.byCode(code.slice(0, 2))!;
     }
 
-    private static master: CityMaster;
-
-    private static cache = {} as { [code: string]: City };
-
-    static byCode(code: string | number): City | undefined {
-        const cache = City.cache;
-        if (code in cache) return cache[code];
-
+    static byCode = cache((code) => {
         code = c5(code);
-        const master = City.master || (City.master = cityLoader());
+        const master = loadCity();
         const pair = master[code];
-        return pair && (cache[code] = new City(code, pair[0], pair[1]));
-    }
+        return pair && new City(code, pair[0], pair[1]);
+    });
+
+    static byPref = cache((code) => {
+        code = +code;
+        const master = loadCity();
+        const list = Object.keys(master).filter(city => (+city.slice(0, 2) === code)).map(City.byCode) as City[];
+        return list.length ? list : undefined;
+    });
 
     static byZipcode(zipcode: string | number): City[] {
         return Oaza.byZipcode(zipcode).map(oaza => oaza.city).filter(uniqByCode());
@@ -109,15 +112,12 @@ export class Oaza implements types.Oaza {
         this.name = name;
     }
 
-    private static master5: PostalMaster;
-    private static master7: PostalMaster;
-
     static byZipcode(zipcode: string | number): Oaza[] {
-        const master5 = Oaza.master5 || (Oaza.master5 = zip5Loader());
-        const master7 = Oaza.master7 || (Oaza.master7 = zip7Loader());
+        const master5 = loadZip5();
+        const master7 = loadZip7();
 
         const zip7 = c7(zipcode);
-        const zip5 = zip7.substr(0, 5);
+        const zip5 = zip7.slice(0, 5);
         const row5 = master5[zip5];
         const row7 = master7[zip7];
 
@@ -160,5 +160,5 @@ function uniqByCode() {
 
 function fixedString(length: number) {
     return (number: number | string) => (number && (number as string).length === length) ?
-        (number as string) : ("0000000" + (+number | 0)).substr(-length);
+        (number as string) : ("0000000" + (+number | 0)).slice(-length);
 }

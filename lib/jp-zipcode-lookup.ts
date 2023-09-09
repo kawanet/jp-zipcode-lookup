@@ -18,6 +18,11 @@ const lazy = <T>(fn: () => T): (() => T) => {
     return () => (v || (v = fn()));
 };
 
+const cache = <T>(fn: (code: string | number) => T | undefined): ((code: string | number) => T | undefined) => {
+    const cached = {} as { [code: string]: T | undefined };
+    return (code) => ((code in cached) ? cached[code] : (cached[code] = fn(code)));
+};
+
 const loadPref = lazy(() => require("../master/pref.json").pref as PrefMaster);
 const loadCity = lazy(() => require("../master/city.json").city as CityMaster);
 const loadZip5 = lazy(() => require("../master/zip5.json").zip5 as PostalMaster);
@@ -42,17 +47,12 @@ export class Pref implements types.Pref {
         this.kana = kana;
     }
 
-    private static cache = {} as { [code: string]: Pref };
-
-    static byCode(code: string | number): Pref | undefined {
-        const cache = Pref.cache;
-        if (code in cache) return cache[code];
-
+    static byCode = cache((code) => {
         code = c2(code);
         const master = loadPref();
         const pair = master[code];
-        return pair && (cache[code] = new Pref(code, pair[0], pair[1]));
-    }
+        return pair && new Pref(code, pair[0], pair[1]);
+    });
 
     static byZipcode(zipcode: string | number): Pref[] {
         return Oaza.byZipcode(zipcode).map(oaza => oaza.pref).filter(uniqByCode());
@@ -76,17 +76,12 @@ export class City implements types.City {
         this.pref = Pref.byCode(code.substr(0, 2))!;
     }
 
-    private static cache = {} as { [code: string]: City };
-
-    static byCode(code: string | number): City | undefined {
-        const cache = City.cache;
-        if (code in cache) return cache[code];
-
+    static byCode = cache((code) => {
         code = c5(code);
         const master = loadCity();
         const pair = master[code];
-        return pair && (cache[code] = new City(code, pair[0], pair[1]));
-    }
+        return pair && new City(code, pair[0], pair[1]);
+    });
 
     static byZipcode(zipcode: string | number): City[] {
         return Oaza.byZipcode(zipcode).map(oaza => oaza.city).filter(uniqByCode());

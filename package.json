@@ -1,18 +1,18 @@
 {
   "name": "jp-zipcode-lookup",
   "description": "Japan Postal Zip Code Lookup",
-  "version": "0.2.8",
+  "version": "0.3.0",
   "author": "@kawanet",
   "bugs": {
     "url": "https://github.com/kawanet/jp-zipcode-lookup/issues"
   },
   "devDependencies": {
-    "@types/mocha": "^10.0.1",
-    "@types/node": "^18.14.0",
+    "@types/mocha": "^10.0.6",
+    "@types/node": "^20.11.5",
     "cdate": "^0.0.7",
     "japanpost-zipcode": "^0.2.5",
     "mocha": "^10.2.0",
-    "typescript": "^5.2.2"
+    "typescript": "^5.3.3"
   },
   "files": [
     "lib/*.js",

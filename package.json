@@ -35,11 +35,11 @@
     "url": "git+https://github.com/kawanet/jp-zipcode-lookup.git"
   },
   "scripts": {
-    "build": "./node_modules/.bin/tsc && npm run update",
+    "build": "tsc && npm run update",
     "fixpack": "fixpack",
     "prepack": "npm run build && npm run test",
-    "test": "./node_modules/.bin/mocha test",
-    "tsc-watch": "./node_modules/.bin/tsc --watch",
+    "test": "mocha test",
+    "tsc-watch": "tsc --watch",
     "update": "node src/update.js master"
   },
   "typings": "types/jp-zipcode-lookup.d.ts"

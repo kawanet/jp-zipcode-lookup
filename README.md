@@ -7,7 +7,7 @@
 
 Oaza
 ```js
-const {Oaza} = require("jp-zipcode-lookup");
+import {Oaza} from "jp-zipcode-lookup";
 
 const oaza = Oaza.byZipcode("1040061")[0];
 
@@ -18,7 +18,7 @@ console.warn(oaza.code, oaza.name); // => 1040061 銀座
 
 City
 ```js
-const {City} = require("jp-zipcode-lookup");
+import {City} from "jp-zipcode-lookup";
 
 const city = City.byCode("13103");
 
@@ -31,28 +31,19 @@ console.warn(cities.map(city => city.name).join(", ")); // => 千代田区, 中�
 
 Pref
 ```js
-const {Pref} = require("jp-zipcode-lookup");
+import {Pref} from "jp-zipcode-lookup";
 
 const pref = Pref.byCode("13");
 
 console.warn(pref.code, pref.name); // => 13 東京都
 ```
 
-### TypeScript
+- See [jp-zipcode-lookup.d.ts](https://github.com/kawanet/jp-zipcode-lookup/blob/master/types/jp-zipcode-lookup.d.ts) for more details.
 
-- [jp-zipcode-lookup.d.ts](https://github.com/kawanet/jp-zipcode-lookup/blob/master/types/jp-zipcode-lookup.d.ts)
+### CommonJS
 
-```typescript
-import {City, Oaza, Pref} from "jp-zipcode-lookup";
-
-const pref = Pref.byCode("13")!;
-console.warn(pref.code, pref.name); // => 13 東京都
-
-const city = City.byCode("13103")!;
-console.warn(city.code, city.pref.name, city.name); // => 13103 東京都 港区
-
-const oaza = Oaza.byZipcode("1040061")[0]!;
-console.warn(oaza.code, oaza.name); // => 1040061 銀座
+```js
+const {City, Oaza, Pref} = require("jp-zipcode-lookup");
 ```
 
 ### GitHub
